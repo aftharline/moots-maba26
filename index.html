@@ -2,353 +2,663 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#060d1a">
-    <title>MABA 26 UNESA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squad IG — MABA UNESA 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        a, button { touch-action: manipulation; }
-
         :root {
-            --navy-deep: #060d1a;
-            --navy-dark: #0a1628;
-            --navy-mid: #122040;
-            --navy-light: #1a2d52;
-            --gold: #d4a843;
-            --gold-light: #f0c75e;
-            --gold-dark: #b08a2a;
-            --gold-glow: rgba(212,168,67,0.25);
-            --gold-subtle: rgba(212,168,67,0.06);
-            --text-dim: rgba(255,255,255,0.55);
-            --text-muted: rgba(255,255,255,0.3);
-            --input-bg: rgba(255,255,255,0.04);
-            --input-border: rgba(255,255,255,0.08);
-            --top-pad: max(12px, env(safe-area-inset-top));
-            --bot-pad: max(12px, env(safe-area-inset-bottom));
-            --side-pad: max(14px, env(safe-area-inset-left));
+            --navy-deep: #060D1F;
+            --navy-dark: #0A1628;
+            --navy-mid: #0F2557;
+            --navy-light: #1B3A6B;
+            --gold-dark: #A68A3E;
+            --gold: #C9A84C;
+            --gold-bright: #E8C547;
+            --gold-glow: #FFD700;
+            --white: #FFFFFF;
+            --white-soft: #E8EAF0;
+            --white-muted: #8892A8;
+            --black: #000000;
+            --card-bg: rgba(15, 37, 87, 0.25);
+            --card-border: rgba(201, 168, 76, 0.12);
+            --glass-bg: rgba(10, 22, 40, 0.6);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: var(--navy-deep);
-            height: 100dvh;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            overflow: hidden;
-            color: #fff;
+            min-height: 100vh;
+            color: var(--white);
+            overflow-x: hidden;
             position: relative;
         }
 
-        /* ====== BACKGROUND ====== */
-        .bg-layer { position: fixed; inset: 0; pointer-events: none; }
-        .bg-gradient {
+        /* === ANIMATED BACKGROUND === */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
             z-index: 0;
-            background:
-                radial-gradient(ellipse 100% 55% at 20% 0%, rgba(18,32,64,0.95), transparent 65%),
-                radial-gradient(ellipse 60% 45% at 90% 90%, rgba(26,45,82,0.35), transparent 55%),
-                radial-gradient(circle at 50% 50%, rgba(10,22,40,1), var(--navy-deep));
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .bg-layer::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            top: -150px; right: -150px;
+            background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+            animation: floatOrb1 12s ease-in-out infinite;
+        }
+        .bg-layer::after {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            bottom: -100px; left: -100px;
+            background: radial-gradient(circle, rgba(15,37,87,0.5) 0%, transparent 70%);
+            animation: floatOrb2 15s ease-in-out infinite;
+        }
+        .bg-orb-3 {
+            position: absolute;
+            width: 300px; height: 300px;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(232,197,71,0.06) 0%, transparent 70%);
+            animation: floatOrb3 10s ease-in-out infinite;
         }
         .bg-grid {
-            z-index: 1;
+            position: absolute;
+            inset: 0;
             background-image:
-                linear-gradient(rgba(212,168,67,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212,168,67,0.02) 1px, transparent 1px);
-            background-size: 56px 56px;
-            mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black, transparent);
-            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black, transparent);
-        }
-        .bg-orb {
-            position: fixed; z-index: 1; border-radius: 50%;
-            filter: blur(90px); pointer-events: none;
-            animation: orbFloat 14s ease-in-out infinite alternate;
-        }
-        .bg-orb--1 { width: 260px; height: 260px; top: -80px; right: -60px; background: rgba(212,168,67,0.05); }
-        .bg-orb--2 { width: 200px; height: 200px; bottom: -50px; left: -40px; background: rgba(18,32,64,0.6); animation-delay: -7s; }
-        @keyframes orbFloat {
-            0% { transform: translate(0,0) scale(1); }
-            100% { transform: translate(25px,18px) scale(1.1); }
-        }
-        #particles { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
-
-        /* ====== APP SHELL ====== */
-        .app {
-            position: relative; z-index: 10;
-            display: flex; flex-direction: column;
-            height: 100%;
-            flex: 1;
-            min-height: 0;
+                linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
 
-        /* ====== TOP SECTION (form area) ====== */
-        .top-section {
-            flex-shrink: 0;
-            padding: var(--top-pad) var(--side-pad) 0;
+        @keyframes floatOrb1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-40px, 30px) scale(1.15); }
         }
-        .header { text-align: center; padding-bottom: 14px; }
+        @keyframes floatOrb2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -40px) scale(1.1); }
+        }
+        @keyframes floatOrb3 {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+        }
 
-        .header-row {
-            display: flex; align-items: center; justify-content: center; gap: 14px;
+        /* === PARTICLES === */
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
         }
-        .badge {
-            width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
-            background: linear-gradient(135deg, var(--gold-dark), var(--gold-light), var(--gold));
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; font-weight: 800; color: var(--navy-deep);
-            box-shadow: 0 4px 20px var(--gold-glow), inset 0 1px 0 rgba(255,255,255,0.3);
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle var(--dur) var(--delay) infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+            50% { opacity: var(--op); transform: translateY(-30px) scale(1); }
+        }
+
+        /* === MAIN LAYOUT === */
+        .main-wrapper {
             position: relative;
-            animation: badgePulse 4s ease-in-out infinite;
-        }
-        .badge::before { content:''; position:absolute; inset:2px; border-radius:10px; border:1px solid rgba(0,0,0,0.08); }
-        @keyframes badgePulse {
-            0%,100% { box-shadow: 0 4px 20px var(--gold-glow); }
-            50% { box-shadow: 0 4px 35px rgba(212,168,67,0.4); }
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 16px 40px;
+            max-width: 520px;
+            margin: 0 auto;
         }
 
-        .header-text { text-align: left; }
-        .header-text h2 {
-            font-size: 19px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.2;
-            background: linear-gradient(120deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 70%, var(--gold-light) 100%);
-            background-size: 250% 100%;
-            -webkit-background-clip: text; background-clip: text;
+        /* === DEVELOPER CREDIT === */
+        .dev-credit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 0;
+            margin-bottom: 8px;
+            animation: fadeSlideDown 0.6s ease-out;
+        }
+        .dev-credit a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--white-muted);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1px solid rgba(201,168,76,0.1);
+            background: rgba(201,168,76,0.04);
+            transition: all 0.3s ease;
+        }
+        .dev-credit a:hover {
+            color: var(--gold-bright);
+            border-color: rgba(201,168,76,0.3);
+            background: rgba(201,168,76,0.08);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(201,168,76,0.1);
+        }
+        .dev-credit a i {
+            font-size: 13px;
+            color: var(--gold);
+            transition: color 0.3s;
+        }
+        .dev-credit a:hover i { color: var(--gold-glow); }
+
+        /* === HEADER === */
+        .header {
+            text-align: center;
+            padding: 24px 0 8px;
+            animation: fadeSlideDown 0.7s ease-out 0.1s both;
+        }
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px; height: 64px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+            border: 1.5px solid rgba(201,168,76,0.2);
+            margin-bottom: 18px;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .logo-badge::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(201,168,76,0.2), transparent, rgba(201,168,76,0.1));
+            z-index: -1;
+        }
+        .logo-badge i {
+            font-size: 26px;
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+            -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: textShimmer 5s ease-in-out infinite;
         }
-        .header-text .subtitle {
-            color: var(--text-muted); font-size: 11.5px; margin-top: 2px; font-weight: 400;
+        .header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 6px;
         }
-        @keyframes textShimmer {
-            0%,100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        .header h1 .gold-text {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .year-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--navy-deep);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 12px;
+            border-radius: 100px;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: var(--white-muted);
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.5;
         }
 
-        /* ====== FORM (inline, compact) ====== */
-        .form-row {
-            display: flex; gap: 8px; padding: 10px 0 14px;
+        /* === CARD === */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 28px 22px;
+            margin-top: 24px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeSlideUp 0.7s ease-out 0.2s both;
         }
-        .input-group { position: relative; flex: 1; min-width: 0; }
-        .input-group input {
-            width: 100%;
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            padding: 0 12px 0 36px;
-            height: 44px;
-            border-radius: 12px;
-            color: #fff; font-size: 14px; font-family: inherit;
-            outline: none; transition: all 0.25s ease;
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
         }
-        .input-group input::placeholder { color: var(--text-muted); font-size: 13px; }
-        .input-group input:focus {
-            border-color: var(--gold);
-            background: rgba(212,168,67,0.04);
-            box-shadow: 0 0 0 2px rgba(212,168,67,0.08);
+
+        .card-form {
+            animation: fadeSlideUp 0.7s ease-out 0.25s both;
         }
-        .input-group:focus-within .icon { color: var(--gold); }
-        .icon {
-            position: absolute; left: 12px; top: 50%;
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+        }
+        .section-label i {
+            font-size: 14px;
+        }
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(201,168,76,0.2), transparent);
+        }
+
+        /* === FORM === */
+        .form-group {
+            position: relative;
+            margin-bottom: 14px;
+        }
+        .form-group i.field-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
             transform: translateY(-50%);
-            color: var(--text-muted); font-size: 13px;
-            transition: color 0.25s; pointer-events: none;
+            font-size: 14px;
+            color: var(--white-muted);
+            transition: color 0.3s;
+            z-index: 2;
+        }
+        .form-group input {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1.5px solid rgba(255,255,255,0.08);
+            padding: 15px 16px 15px 44px;
+            border-radius: 14px;
+            color: var(--white);
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.25);
+            font-weight: 400;
+        }
+        .form-group input:focus {
+            border-color: var(--gold);
+            background: rgba(201,168,76,0.05);
+            box-shadow: 0 0 0 4px rgba(201,168,76,0.08);
+        }
+        .form-group input:focus + i.field-icon,
+        .form-group input:focus ~ i.field-icon {
+            color: var(--gold);
         }
 
         .btn-submit {
-            flex-shrink: 0;
-            background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
-            color: var(--navy-deep); border: none;
-            height: 44px; min-width: 44px; padding: 0 16px;
-            border-radius: 12px;
-            font-weight: 700; cursor: pointer;
-            transition: all 0.25s ease;
-            font-size: 13px; font-family: inherit;
-            position: relative; overflow: hidden;
-            white-space: nowrap;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));
+            color: var(--navy-deep);
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            margin-top: 4px;
         }
         .btn-submit::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.35) 50%, transparent 75%);
-            transform: translateX(-120%);
-            transition: transform 0.6s ease;
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .btn-submit:hover::before { transform: translateX(120%); }
-        .btn-submit:hover { box-shadow: 0 6px 24px var(--gold-glow); }
-        .btn-submit:active { transform: scale(0.96); }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201,168,76,0.35);
+        }
+        .btn-submit:hover::before { opacity: 1; }
+        .btn-submit:active { transform: translateY(0); }
         .btn-submit:disabled {
-            background: rgba(255,255,255,0.08); color: var(--text-muted);
-            cursor: not-allowed; transform: none; box-shadow: none;
+            background: rgba(255,255,255,0.08);
+            color: var(--white-muted);
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
         }
         .btn-submit:disabled::before { display: none; }
-
-        /* ====== DIVIDER ====== */
-        .divider {
-            flex-shrink: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(212,168,67,0.15), transparent);
-            margin: 0 var(--side-pad);
+        .btn-submit .btn-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* ====== LIST SECTION (fills remaining space) ====== */
-        .list-section {
-            flex: 1; min-height: 0;
-            display: flex; flex-direction: column;
-            padding: 12px var(--side-pad) var(--bot-pad);
+        /* === DIVIDER === */
+        .divider-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 28px 0;
+            animation: fadeSlideUp 0.7s ease-out 0.35s both;
         }
-        .list-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 10px; flex-shrink: 0;
+        .divider-area::before, .divider-area::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent);
         }
-        .list-header h3 { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); letter-spacing: -0.1px; }
-        .list-count {
-            font-size: 11px; color: var(--gold); font-weight: 600;
-            background: var(--gold-subtle);
-            padding: 3px 10px; border-radius: 20px;
-            border: 1px solid rgba(212,168,67,0.1);
-            transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+        .divider-area span {
+            font-size: 11px;
+            color: var(--white-muted);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             white-space: nowrap;
         }
 
-        /* Skeleton */
-        .loading { display: flex; flex-direction: column; gap: 8px; }
-        .skeleton {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 13px 14px; border-radius: 12px;
-            background: rgba(255,255,255,0.025);
-            animation: skPulse 1.4s ease-in-out infinite;
+        /* === LIST CARD === */
+        .card-list {
+            animation: fadeSlideUp 0.7s ease-out 0.4s both;
         }
-        .skeleton .ln { height: 10px; border-radius: 5px; background: rgba(255,255,255,0.05); }
-        .skeleton .ln.s { width: 72px; }
-        .skeleton .ln.l { width: 100px; }
-        .skeleton:nth-child(2) { animation-delay: 0.15s; }
-        .skeleton:nth-child(3) { animation-delay: 0.3s; }
-        @keyframes skPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-        /* List */
+        .list-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .list-header .section-label { margin-bottom: 0; }
+
+        .member-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(201,168,76,0.1);
+            border: 1px solid rgba(201,168,76,0.15);
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 100px;
+        }
+        .member-count .dot {
+            width: 6px; height: 6px;
+            background: #4ADE80;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74,222,128,0); }
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 14px;
+        }
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 13px;
+            color: var(--white-muted);
+        }
+        .search-box input {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1.5px solid rgba(255,255,255,0.06);
+            padding: 12px 14px 12px 40px;
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 13px;
+            font-family: inherit;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-box input::placeholder { color: rgba(255,255,255,0.2); }
+        .search-box input:focus {
+            border-color: rgba(201,168,76,0.3);
+            background: rgba(201,168,76,0.03);
+        }
+
+        /* === LIST ITEMS === */
         .list-wrapper {
-            flex: 1; min-height: 0;
+            max-height: 380px;
             overflow-y: auto;
-            display: flex; flex-direction: column; gap: 5px;
-            padding-right: 3px;
-            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-right: 4px;
         }
         .list-wrapper::-webkit-scrollbar { width: 3px; }
         .list-wrapper::-webkit-scrollbar-track { background: transparent; }
-        .list-wrapper::-webkit-scrollbar-thumb { background: rgba(212,168,67,0.15); border-radius: 10px; }
-        .list-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(212,168,67,0.3); }
+        .list-wrapper::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.2); border-radius: 10px; }
 
         .list-item {
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.025);
-            padding: 11px 14px; border-radius: 12px;
-            text-decoration: none; color: #fff;
-            border: 1px solid rgba(255,255,255,0.02);
-            transition: all 0.15s ease;
-            animation: itemIn 0.35s cubic-bezier(0.16,1,0.3,1) both;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--white);
+            background: rgba(255,255,255,0.02);
+            border: 1px solid transparent;
+            transition: all 0.25s ease;
+            animation: itemSlideIn 0.4s ease-out both;
+        }
+        .list-item:hover {
+            background: rgba(201,168,76,0.06);
+            border-color: rgba(201,168,76,0.12);
+            transform: translateX(4px);
+        }
+        .list-item:active { transform: scale(0.98); }
+
+        .item-avatar {
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 800;
+            flex-shrink: 0;
+            color: var(--navy-deep);
+            position: relative;
+        }
+        .item-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; right: -1px;
+            width: 10px; height: 10px;
+            background: #4ADE80;
+            border: 2px solid var(--navy-dark);
+            border-radius: 50%;
+        }
+
+        .item-info { flex: 1; min-width: 0; }
+        .item-info .name {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .item-info .username {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .item-arrow {
+            color: rgba(255,255,255,0.15);
+            font-size: 12px;
+            transition: all 0.25s;
             flex-shrink: 0;
         }
-        .list-item:active {
-            background: rgba(212,168,67,0.08);
-            border-color: rgba(212,168,67,0.18);
-            transform: scale(0.985);
+        .list-item:hover .item-arrow {
+            color: var(--gold);
+            transform: translateX(2px);
         }
-        @keyframes itemIn {
-            from { opacity: 0; transform: translateY(5px); }
+
+        @keyframes itemSlideIn {
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .list-item .name {
-            font-weight: 600; font-size: 13px; color: rgba(255,255,255,0.85);
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-            margin-right: 10px; flex: 1; min-width: 0;
-        }
-        .list-item .username {
-            font-size: 12px; color: var(--gold); font-weight: 600;
-            display: flex; align-items: center; gap: 4px;
-            white-space: nowrap; flex-shrink: 0;
-        }
-        .list-item .username i { font-size: 8px; opacity: 0.4; }
 
-        .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
-        .empty-state i { font-size: 28px; margin-bottom: 10px; color: rgba(212,168,67,0.12); display: block; }
-        .empty-state p { font-size: 13px; line-height: 1.6; }
-
-        /* ====== CREDIT BAR ====== */
-        .credit {
-            flex-shrink: 0;
-            text-align: center; padding: 8px var(--side-pad);
-            font-size: 11px; color: var(--text-muted);
-            border-top: 1px solid rgba(255,255,255,0.03);
-            background: rgba(0,0,0,0.15);
+        .empty-state {
+            text-align: center;
+            padding: 36px 20px;
         }
-        .credit a { color: var(--gold); text-decoration: none; font-weight: 600; }
-        .credit a:active { color: var(--gold-light); }
+        .empty-state i {
+            font-size: 36px;
+            color: rgba(201,168,76,0.15);
+            margin-bottom: 12px;
+        }
+        .empty-state p {
+            color: var(--white-muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
 
-        /* ====== TOAST ====== */
+        .loading-state {
+            text-align: center;
+            padding: 30px;
+        }
+        .loading-spinner {
+            width: 28px; height: 28px;
+            border: 2.5px solid rgba(201,168,76,0.15);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-state p { color: var(--white-muted); font-size: 13px; }
+
+        /* === TOAST === */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+        }
         .toast {
-            position: fixed; top: 14px; left: 50%;
-            transform: translateX(-50%) translateY(-120px);
             background: rgba(10,22,40,0.95);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(212,168,67,0.25);
-            padding: 10px 18px; border-radius: 12px;
-            color: var(--gold-light); font-size: 13px; font-weight: 600;
-            font-family: inherit; z-index: 9999;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
-            display: flex; align-items: center; gap: 8px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(201,168,76,0.2);
+            color: var(--white);
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            animation: toastIn 0.4s ease-out;
+            pointer-events: auto;
             white-space: nowrap;
-            max-width: calc(100vw - 28px);
         }
-        .toast.show { transform: translateX(-50%) translateY(0); }
-        .toast i { color: var(--gold); flex-shrink: 0; }
+        .toast.success i { color: #4ADE80; }
+        .toast.error i { color: #F87171; }
+        .toast.removing { animation: toastOut 0.3s ease-in forwards; }
 
-        /* ====== TABLET+ ====== */
-        @media (min-width: 520px) {
-            :root { --side-pad: max(24px, env(safe-area-inset-left)); }
-            .top-section { padding-top: max(20px, env(safe-area-inset-top)); }
-            .header { padding-bottom: 18px; }
-            .header-row { gap: 18px; }
-            .badge { width: 52px; height: 52px; border-radius: 14px; font-size: 24px; }
-            .header-text h2 { font-size: 24px; }
-            .header-text .subtitle { font-size: 13px; }
-            .form-row { padding: 12px 0 18px; gap: 10px; }
-            .input-group input { height: 48px; font-size: 15px; border-radius: 14px; }
-            .btn-submit { height: 48px; padding: 0 22px; font-size: 14px; border-radius: 14px; }
-            .list-section { padding: 14px var(--side-pad) max(16px, env(safe-area-inset-bottom)); }
-            .list-header { margin-bottom: 12px; }
-            .list-header h3 { font-size: 14px; }
-            .list-count { font-size: 12px; padding: 4px 12px; }
-            .list-wrapper { gap: 6px; }
-            .list-item { padding: 12px 16px; border-radius: 14px; }
-            .list-item .name { font-size: 14px; }
-            .list-item .username { font-size: 13px; }
-            .list-item:hover {
-                background: rgba(212,168,67,0.055);
-                border-color: rgba(212,168,67,0.15);
-                transform: translateX(4px);
-            }
-            .list-item .username i { opacity: 0; transform: translateX(-6px); transition: all 0.25s ease; }
-            .list-item:hover .username i { opacity: 1; transform: translateX(0); }
-            .credit { font-size: 12px; padding: 10px var(--side-pad); }
-            .toast { padding: 12px 24px; font-size: 14px; border-radius: 14px; top: 20px; }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(-20px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes toastOut {
+            to { opacity: 0; transform: translateY(-20px) scale(0.9); }
         }
 
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 28px 0 8px;
+            animation: fadeSlideUp 0.7s ease-out 0.5s both;
+        }
+        .footer p {
+            font-size: 11px;
+            color: rgba(255,255,255,0.15);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .footer .unesa-text {
+            color: rgba(201,168,76,0.3);
+            font-weight: 700;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeSlideDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === NO RESULTS === */
+        .no-results {
+            text-align: center;
+            padding: 24px 16px;
+            color: var(--white-muted);
+            font-size: 13px;
+        }
+        .no-results i {
+            font-size: 28px;
+            color: rgba(255,255,255,0.08);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* === RESPONSIVE === */
+        @media (min-width: 420px) {
+            .main-wrapper { padding: 28px 24px 48px; }
+            .card { padding: 32px 28px; }
+            .header h1 { font-size: 30px; }
+        }
         @media (min-width: 768px) {
-            .app { max-width: 560px; margin: 0 auto; }
-        }
-
-        /* ====== TINY SCREENS ====== */
-        @media (max-width: 340px) {
-            .btn-submit { padding: 0 12px; font-size: 12px; }
-            .list-item { padding: 10px 12px; }
-            .list-item .name { font-size: 12px; }
-            .list-item .username { font-size: 11px; }
-        }
-
-        /* ====== KEYBOARD OPEN ====== */
-        @media (max-height: 480px) {
-            .header-text .subtitle { display: none; }
-            .form-row { padding: 6px 0 10px; }
-            .list-header { margin-bottom: 6px; }
+            .main-wrapper { padding: 40px 32px 56px; }
+            .card { padding: 36px 32px; border-radius: 28px; }
+            .header h1 { font-size: 34px; }
+            .list-wrapper { max-height: 450px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -361,233 +671,282 @@
 </head>
 <body>
 
-    <div class="bg-layer bg-gradient"></div>
-    <div class="bg-layer bg-grid"></div>
-    <div class="bg-orb bg-orb--1"></div>
-    <div class="bg-orb bg-orb--2"></div>
-    <canvas id="particles"></canvas>
-
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastText">Berhasil ditambahkan!</span>
+    <!-- Background Layer -->
+    <div class="bg-layer">
+        <div class="bg-grid"></div>
+        <div class="bg-orb-3"></div>
     </div>
 
-    <div class="app">
-        <!-- Top: Header + Form -->
-        <div class="top-section">
-            <header class="header">
-                <div class="header-row">
-                    <div class="badge"><img src="logo.png" style="width: 1.9rem;" alt=""></div>
-                    <div class="header-text">
-                        <h2>MABA 26 UNESA</h2>
-                        <p class="subtitle">Input akunmu biar otomatis masuk list</p>
-                    </div>
-                </div>
-            </header>
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
 
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+
+        <!-- Developer Credit -->
+        <div class="dev-credit">
+            <a href="https://www.instagram.com/aftharmuhammad_/" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram"></i>
+                <span>Developed by aftharmuhammad_</span>
+            </a>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-badge">
+                <img src="logo.webp" style="width: 3rem;" alt="">
+            </div>
+            <h1>MABA <span class="gold-text">UNESA</span></h1>
+            <div class="year-badge">ANGKATAN 2026</div>
+            <p>Daftarin akun Instagram-mu, ayo saling follow buat nambah teman sebanyak-banyaknya!</p>
+        </header>
+
+        <!-- Form Card -->
+        <div class="card card-form">
+            <div class="section-label">
+                <i class="fa-solid fa-plus"></i>
+                Tambah Akun
+            </div>
             <form id="igForm">
-                <div class="form-row">
-                    <div class="input-group">
-                        <input type="text" id="inputNama" placeholder="Nama" required autocomplete="off">
-                        <i class="fas fa-user icon"></i>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" id="inputUsername" placeholder="Username IG" required autocomplete="off" autocapitalize="off" spellcheck="false">
-                        <i class="fab fa-instagram icon"></i>
-                    </div>
-                    <button type="submit" id="btnSubmit" class="btn-submit">Tambah</button>
+                <div class="form-group">
+                    <input type="text" id="inputNama" placeholder="Nama Lengkap / Panggilan" required autocomplete="off">
+                    <i class="fa-solid fa-user field-icon"></i>
                 </div>
+                <div class="form-group">
+                    <input type="text" id="inputUsername" placeholder="Username IG (tanpa @)" required autocomplete="off">
+                    <i class="fa-brands fa-instagram field-icon"></i>
+                </div>
+                <button type="submit" id="btnSubmit" class="btn-submit">
+                    <span class="btn-content">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span id="btnText">Tambahkan Saya</span>
+                    </span>
+                </button>
             </form>
         </div>
 
-        <div class="divider"></div>
+        <!-- Divider -->
+        <div class="divider-area">
+            <span>Squad List</span>
+        </div>
 
-        <!-- List: fills all remaining space -->
-        <section class="list-section">
+        <!-- List Card -->
+        <div class="card card-list">
             <div class="list-header">
-                <h3>Daftar Akun Saat Ini</h3>
-                <span class="list-count" id="listCount">0 orang</span>
+                <div class="section-label">
+                    <i class="fa-solid fa-list"></i>
+                    Daftar Anggota
+                </div>
+                <div class="member-count">
+                    <span class="dot"></span>
+                    <span id="countText">0 orang</span>
+                </div>
             </div>
-            <div id="loader" class="loading">
-                <div class="skeleton"><span class="ln l"></span><span class="ln s"></span></div>
-                <div class="skeleton"><span class="ln l"></span><span class="ln s"></span></div>
-                <div class="skeleton"><span class="ln l"></span><span class="ln s"></span></div>
-            </div>
-            <div id="listContainer" class="list-wrapper"></div>
-        </section>
 
-        <footer class="credit">
-            Developer: <a href="https://www.instagram.com/aftharmuhammad_/" target="_blank" rel="noopener noreferrer">@aftharmuhammad_</a>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Cari nama atau username..." autocomplete="off">
+            </div>
+
+            <div id="loader" class="loading-state">
+                <div class="loading-spinner"></div>
+                <p>Memuat data secara live...</p>
+            </div>
+            <div id="listContainer" class="list-wrapper" style="display:none;"></div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p><span class="unesa-text">UNESA</span> — Universitas Negeri Surabaya</p>
         </footer>
     </div>
 
-    <script>
-        /* ========================================
-           PARTICLE SYSTEM
-           ======================================== */
-        (function () {
-            var cvs = document.getElementById('particles');
-            var ctx = cvs.getContext('2d');
-            var particles = [];
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-            function resize() { cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
-            resize();
-            window.addEventListener('resize', resize);
+        const firebaseConfig = {
+            apiKey: "AIzaSyAZP7dJ2sqNFzGYV9VY_rN2TslXHQn1o3s",
+            authDomain: "squad-ig-list.firebaseapp.com",
+            projectId: "squad-ig-list",
+            storageBucket: "squad-ig-list.firebasestorage.app",
+            messagingSenderId: "129040094336",
+            appId: "1:129040094336:web:6d8ac546506b5b0d038265"
+        };
 
-            function getCount() {
-                var w = window.innerWidth;
-                if (w < 360) return 10;
-                if (w < 480) return 18;
-                if (w < 768) return 30;
-                return 45;
-            }
-
-            function Dot(ry) { this.reset(ry); }
-            Dot.prototype.reset = function (ry) {
-                this.x = Math.random() * cvs.width;
-                this.y = ry ? Math.random() * cvs.height : cvs.height + 10;
-                this.r = Math.random() * 1.4 + 0.3;
-                this.vy = -(Math.random() * 0.28 + 0.05);
-                this.vx = (Math.random() - 0.5) * 0.12;
-                this.alpha = Math.random() * 0.35 + 0.05;
-                this.wA = Math.random() * 0.25 + 0.06;
-                this.wS = Math.random() * 0.01 + 0.004;
-                this.ph = Math.random() * Math.PI * 2;
-            };
-            Dot.prototype.update = function () {
-                this.y += this.vy;
-                this.ph += this.wS;
-                this.x += Math.sin(this.ph) * this.wA + this.vx;
-                if (this.y < -10) this.reset(false);
-            };
-            Dot.prototype.draw = function () {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(212,168,67,' + this.alpha + ')';
-                ctx.fill();
-            };
-
-            var count = getCount();
-            for (var i = 0; i < count; i++) particles.push(new Dot(true));
-            var lastCount = count;
-            window.addEventListener('resize', function () {
-                count = getCount();
-                if (count !== lastCount) {
-                    particles = [];
-                    for (var i = 0; i < count; i++) particles.push(new Dot(true));
-                    lastCount = count;
-                }
-            });
-
-            (function loop() {
-                ctx.clearRect(0, 0, cvs.width, cvs.height);
-                for (var i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); }
-                requestAnimationFrame(loop);
-            })();
-        })();
-
-        /* ========================================
-           TOAST
-           ======================================== */
-        var toastTimer;
-        function showToast(text) {
-            var t = document.getElementById('toast');
-            document.getElementById('toastText').textContent = text;
-            t.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(function () { t.classList.remove('show'); }, 3000);
-        }
-
-        /* ========================================
-           BACKEND LOGIC — TIDAK DIUBAH
-           ======================================== */
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw-amx21RJKIrDUy4E1pKkUIYRt05q5c9UEa_brx33W4VximZgTHA2-uJ2iNYy2gzCf/exec";
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const listCollection = collection(db, "instagram_list");
 
         const form = document.getElementById('igForm');
         const btnSubmit = document.getElementById('btnSubmit');
+        const btnText = document.getElementById('btnText');
         const listContainer = document.getElementById('listContainer');
         const loader = document.getElementById('loader');
-        const listCount = document.getElementById('listCount');
+        const countText = document.getElementById('countText');
+        const searchInput = document.getElementById('searchInput');
 
-        function muatDaftar() {
-            loader.style.display = "flex";
-            listContainer.innerHTML = "";
+        // Warna avatar berdasarkan index
+        const avatarColors = [
+            'linear-gradient(135deg, #C9A84C, #A68A3E)',
+            'linear-gradient(135deg, #E8C547, #C9A84C)',
+            'linear-gradient(135deg, #1B3A6B, #0F2557)',
+            'linear-gradient(135deg, #2D5A9E, #1B3A6B)',
+            'linear-gradient(135deg, #D4AF37, #B8942E)',
+            'linear-gradient(135deg, #3A6FC4, #2D5A9E)',
+            'linear-gradient(135deg, #FFD700, #C9A84C)',
+            'linear-gradient(135deg, #4A7FD4, #3A6FC4)',
+        ];
 
-            fetch(WEB_APP_URL)
-                .then(res => res.json())
-                .then(data => {
-                    loader.style.display = "none";
+        // Simpan semua data untuk search
+        let allData = [];
 
-                    listCount.textContent = data.length + ' orang';
-                    listCount.style.transform = 'scale(1.25)';
-                    setTimeout(function () { listCount.style.transform = 'scale(1)'; }, 220);
-
-                    if (data.length === 0) {
-                        listContainer.innerHTML =
-                            '<div class="empty-state">' +
-                            '<i class="fas fa-user-plus"></i>' +
-                            '<p>Belum ada yang ngelist.<br>Jadi yang pertama!</p>' +
-                            '</div>';
-                        return;
-                    }
-
-                    data.forEach(function (user, i) {
-                        var item = document.createElement('a');
-                        item.href = 'https://instagram.com/' + user[1];
-                        item.target = '_blank';
-                        item.rel = 'noopener noreferrer';
-                        item.className = 'list-item';
-                        item.style.animationDelay = (i * 0.03) + 's';
-                        item.innerHTML =
-                            '<span class="name">' + user[0] + '</span>' +
-                            '<span class="username">@' + user[1] + ' <i class="fas fa-arrow-up-right-from-square"></i></span>';
-                        listContainer.appendChild(item);
-                    });
-                })
-                .catch(function (err) {
-                    loader.innerHTML =
-                        '<div class="empty-state">' +
-                        '<i class="fas fa-triangle-exclamation"></i>' +
-                        '<p>Gagal memuat data</p>' +
-                        '</div>';
-                    console.error(err);
-                });
+        function getInitials(nama) {
+            const parts = nama.trim().split(/\s+/);
+            if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+            return nama.trim().substring(0, 2).toUpperCase();
         }
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
+        function renderList(filter = '') {
+            listContainer.innerHTML = '';
+            const filtered = filter
+                ? allData.filter(d =>
+                    d.nama.toLowerCase().includes(filter) ||
+                    d.username.toLowerCase().includes(filter)
+                )
+                : allData;
 
-            var nama = document.getElementById('inputNama').value;
-            var username = document.getElementById('inputUsername').value;
+            if (filtered.length === 0 && filter) {
+                listContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fa-solid fa-face-meh"></i>
+                        Tidak ditemukan untuk "<strong>${filter}</strong>"
+                    </div>`;
+                return;
+            }
 
-            btnSubmit.innerText = "...";
-            btnSubmit.disabled = true;
+            filtered.forEach((data, i) => {
+                const item = document.createElement('a');
+                item.href = `https://instagram.com/${data.username}`;
+                item.target = "_blank";
+                item.rel = "noopener noreferrer";
+                item.className = 'list-item';
+                item.style.animationDelay = `${i * 0.04}s`;
 
-            var urlKirim = WEB_APP_URL + '?action=add&nama=' + encodeURIComponent(nama) + '&username=' + encodeURIComponent(username);
+                const colorIdx = i % avatarColors.length;
+                const initials = getInitials(data.nama);
 
-            fetch(urlKirim)
-                .then(res => res.json())
-                .then(result => {
-                    btnSubmit.innerText = "Tambah";
-                    btnSubmit.disabled = false;
+                item.innerHTML = `
+                    <div class="item-avatar" style="background: ${avatarColors[colorIdx]}">
+                        ${initials}
+                    </div>
+                    <div class="item-info">
+                        <div class="name">${escapeHtml(data.nama)}</div>
+                        <div class="username">@${escapeHtml(data.username)}</div>
+                    </div>
+                    <div class="item-arrow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
 
-                    if (result.status === "success") {
-                        form.reset();
-                        showToast('Berhasil ditambahkan!');
-                        muatDaftar();
-                    } else {
-                        alert("Gagal menambahkan data: " + result.message);
-                    }
-                })
-                .catch(function (err) {
-                    alert("Terjadi kesalahan jaringan.");
-                    btnSubmit.innerText = "Tambah";
-                    btnSubmit.disabled = false;
-                    console.error(err);
-                });
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-xmark';
+            toast.innerHTML = `<i class="fa-solid ${icon}"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('removing');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Real-time listener
+        const q = query(listCollection, orderBy("waktuInput", "desc"));
+        onSnapshot(q, (snapshot) => {
+            loader.style.display = "none";
+            listContainer.style.display = "flex";
+
+            allData = [];
+            snapshot.forEach((doc) => {
+                allData.push(doc.data());
+            });
+
+            countText.textContent = `${allData.length} orang`;
+            renderList(searchInput.value.toLowerCase().trim());
+        }, (error) => {
+            console.error("Error mengambil data:", error);
+            loader.innerHTML = `<p style="color:#F87171;">Gagal memuat data.</p>`;
         });
 
-        muatDaftar();
+        // Search
+        searchInput.addEventListener('input', (e) => {
+            renderList(e.target.value.toLowerCase().trim());
+        });
+
+        // Submit form
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nama = document.getElementById('inputNama').value.trim();
+            let username = document.getElementById('inputUsername').value.replace('@', '').trim();
+
+            if (!nama || !username) return;
+
+            btnText.textContent = 'Mengirim...';
+            btnSubmit.disabled = true;
+
+            try {
+                await addDoc(listCollection, {
+                    nama: nama,
+                    username: username,
+                    waktuInput: serverTimestamp()
+                });
+                form.reset();
+                showToast(`${nama} berhasil ditambahkan!`, 'success');
+            } catch (error) {
+                console.error("Gagal menambahkan data:", error);
+                showToast('Gagal mengirim. Coba lagi!', 'error');
+            } finally {
+                btnText.textContent = 'Tambahkan Saya';
+                btnSubmit.disabled = false;
+            }
+        });
+    </script>
+
+    <!-- Particles Generator -->
+    <script>
+        (function() {
+            const container = document.getElementById('particles');
+            const count = 25;
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.setProperty('--dur', (4 + Math.random() * 6) + 's');
+                p.style.setProperty('--delay', (Math.random() * 5) + 's');
+                p.style.setProperty('--op', (0.15 + Math.random() * 0.35).toString());
+                if (Math.random() > 0.7) {
+                    p.style.width = '3px';
+                    p.style.height = '3px';
+                }
+                container.appendChild(p);
+            }
+        })();
     </script>
 </body>
 </html>
